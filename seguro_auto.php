@@ -1,5 +1,4 @@
 <?php
-
 /*
   Plugin Name: seguro Auto
   Description: módulo para formulário de seguro auto.
@@ -10,14 +9,12 @@
 
 require_once 'classes/Mysql.php';
 
-use classes\Mysql\Mysql as db;
+use classes\Mysql\Mysql as seguroAuto;
 
-db::$tabela       = "teste";
-db::$obrigatorios = ['info2'];
+seguroAuto::$tabela       = "email";
+//db::$obrigatorios = ['info2'];
 
 
 add_shortcode("teste", function() {
-    db::create(['info' => "teste", 'info2' => 'te']); //all("select nome from tabela limit 5");
-    echo db::$consulta;
-    echo db::$mensagem;
+    seguroAuto::create(['email' => array("lanterna_@hotmail.com",'rrrrr','555555')]); //all("select nome from tabela limit 5");
 });
