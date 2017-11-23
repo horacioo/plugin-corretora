@@ -47,21 +47,11 @@ vou criar novo regstro
             self::$array[self::$tabela][]=$id;
         endif;
     }
-
-
-
-
-
-
-
-
-
-
+    
     private static function insertArray($info='',$campo='') {
         foreach ($info as $i):
           self::create([$campo => $i]); echo "<br>".self::$consulta;
         endforeach;
-        echo"<p>========";print_r(self::$array);
     }
 
 
