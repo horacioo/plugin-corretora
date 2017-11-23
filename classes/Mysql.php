@@ -44,8 +44,7 @@ vou criar novo regstro
             self::$consulta = "insert into " . self::$tabela . "(" . $insert . ")values(" . $values . ")";
             $wpdb->query(self::$consulta);
             $id =  $wpdb->insert_id;
-           self::$array=[self::$tabela];  
-           //self::$array=5;
+            self::$array[self::$tabela][]=$id;
         endif;
     }
 
