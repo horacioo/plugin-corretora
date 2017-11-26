@@ -126,7 +126,7 @@ vou criar novo regstro
 
 
 
-    static function Associate() {
+    static function Associate($tabelas='') {
         global $wpdb;
     }
 
