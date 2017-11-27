@@ -18,7 +18,17 @@ seguroAuto::$tabela = "email";
 //db::$obrigatorios = ['info2'];
 
 
+
+
 add_shortcode("formLead", function($atts) {
+
+
+    if (isset($_POST)){
+        EnviaEmail();
+    }
+
+
+
     if (isset($atts['campos'])) {
         ?>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -39,23 +49,48 @@ add_shortcode("formLead", function($atts) {
         </script>
         <?php
 
-        $return = "<section id='section'>";
-        if (isset($atts['titulo'])) { $return .= "<h2>" . $atts['titulo'] . "</h2>"; }
-        $return .= "<form action='' method='POST' >";
+        $return = "<section id='" . form::nomeForm() . "'>";
+        if (isset($atts['titulo'])) {
+            $return .= "<h2>" . $atts['titulo'] . "</h2>";
+        }
+        $return .= "<form action='#" . form::nomeForm() . "' method='post' name=" . form::nomeForm() . "[] >";
         $campos = $atts['campos'];
         $campos = explode(",", $campos);
-        
+
         foreach ($campos as $x):
             $input = trim($x);
-            if (in_array($input, form::$campos)) { $return .= form::$input();} 
-            else 
-            {$return .= "<p><label>$input:</label><input type='text' required='required' name='" . $input . "' class='data'  id='" . $input . "Form' ></p>"; }
+            if (in_array($input, form::$campos)) {
+                $return .= form::$input();
+            } else
+            {
+                $return .= "<p><label>$input:</label><input type='text' required='required' name=" . form::nomeForm() . "[" . $input . "] class='data'  id='" . $input . "Form' ></p>";
+            }
         endforeach;
-        
+
         $return .= "<input type='submit' value='enviar' id='formSubmit'>";
         $return .= "</form>";
         $return .= "</section>";
     }
     return $return;
 });
+
+function EnviaEmail() {
+    $data = "";
+    if (isset($_POST[form::nomeForm()])):
+
+        $dados  = $_POST[form::nomeForm()];
+        $chaves = array_keys($dados);
+       
+        foreach ($chaves as $c):
+            $data .= "<p> $c : " . $dados[$c] . "</p>";
+        endforeach;
+
+
+        $x = wp_mail("lanterna_@hotmail.com", "formulario do site", $data);
+        var_dump($x);
+    endif;
+}
+
+
+
 
