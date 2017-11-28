@@ -10,25 +10,26 @@
 
 require_once 'classes/Mysql.php';
 require_once 'classes/formulario.php';
+require_once 'classes/entidades.php';
 
 use classes\Mysql\Mysql as seguroAuto;
 use classes\Formulario\Formulario as form;
+use classes\entidades\entidades as ent;
 
 seguroAuto::$tabela = "email";
 //db::$obrigatorios = ['info2'];
 
 
 
+register_activation_hook('seguro_auto', ent::tabela_Cliente());
+
+
+
 
 add_shortcode("formLead", function($atts) {
-
-
-    if (isset($_POST)){
-        EnviaEmail();
+    if (isset($_POST)) {
+        salva();
     }
-
-
-
     if (isset($atts['campos'])) {
         ?>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -43,6 +44,7 @@ add_shortcode("formLead", function($atts) {
                     jQuery("#telefoneForm").mask("(99)9999-9999");
                     jQuery("#celularForm").mask("(99)9-9999-9999");
                     jQuery("#whatsappForm").mask("(99)9-9999-9999");
+                    jQuery("#cpfForm").mask("999.999.999-99");
                     jQuery("#data").mask("99/99/9999", {placeholder: "mm/dd/yyyy"});
                 });
             });
@@ -61,8 +63,7 @@ add_shortcode("formLead", function($atts) {
             $input = trim($x);
             if (in_array($input, form::$campos)) {
                 $return .= form::$input();
-            } else
-            {
+            } else {
                 $return .= "<p><label>$input:</label><input type='text' required='required' name=" . form::nomeForm() . "[" . $input . "] class='data'  id='" . $input . "Form' ></p>";
             }
         endforeach;
@@ -74,22 +75,34 @@ add_shortcode("formLead", function($atts) {
     return $return;
 });
 
-function EnviaEmail() {
+
+
+
+function salva() {
     $data = "";
     if (isset($_POST[form::nomeForm()])):
 
         $dados  = $_POST[form::nomeForm()];
         $chaves = array_keys($dados);
-       
+                      
         foreach ($chaves as $c):
             $data .= "<p> $c : " . $dados[$c] . "</p>";
         endforeach;
 
-
-        $x = wp_mail("lanterna_@hotmail.com", "formulario do site", $data);
-        var_dump($x);
+        
+        seguroAuto::$tabela="cliente";
+        $x = ent::Request([$dados, seguroAuto::$tabela]);
+        seguroAuto::create(ent::$insert);
+       
+        
     endif;
 }
+
+
+
+
+
+
 
 
 
