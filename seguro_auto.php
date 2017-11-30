@@ -8,16 +8,37 @@
   Author URI: http://planet1.com.br
  */
 
-require_once 'classes/Mysql.php';
+
+
+
+
+
+
+
+/* * *************************************** */
+require_once 'classes/Request_core.php';
+require_once 'classes/Mysql_core.php';
 require_once 'classes/formulario.php';
 require_once 'classes/entidades.php';
+require_once 'classes/cliente.php';
+require_once 'classes/telefone.php';
+require_once 'classes/email.php';
+require_once "classes/clientes_email.php";
+/* * *************************************** */
+/* * *************************************** */
+/* * *************************************** */
 
 use classes\Mysql\Mysql as seguroAuto;
 use classes\Formulario\Formulario as form;
 use classes\entidades\entidades as ent;
+use classes\cliente\cliente as cliente;
+use classes\telefone\telefone as tel_inf;
+use classes\email\email as email_i;
+use classes\email\clientes_email as cliMail;
 
-seguroAuto::$tabela = "email";
-//db::$obrigatorios = ['info2'];
+/* * *************************************** */
+/* * *************************************** */
+/* * *************************************** */
 
 
 
@@ -25,8 +46,8 @@ register_activation_hook('seguro_auto', ent::tabela_Cliente());
 
 
 
-
 add_shortcode("formLead", function($atts) {
+
     if (isset($_POST)) {
         salva();
     }
@@ -75,29 +96,17 @@ add_shortcode("formLead", function($atts) {
     return $return;
 });
 
-
-
+/* * **************************************************************** */
 
 function salva() {
     $data = "";
     if (isset($_POST[form::nomeForm()])):
-
-        $dados  = $_POST[form::nomeForm()];
-        $chaves = array_keys($dados);
-                      
-        foreach ($chaves as $c):
-            $data .= "<p> $c : " . $dados[$c] . "</p>";
-        endforeach;
-
-        
-        seguroAuto::$tabela="cliente";
-        $x = ent::Request([$dados, seguroAuto::$tabela]);
-        seguroAuto::create(ent::$insert);
-       
-        
+        new cliente();   cliente::criar($_POST[form::nomeForm()]);
+        new tel_inf();   tel_inf::criar($_POST[form::nomeForm()]);
+        new email_i();   email_i::criar($_POST[form::nomeForm()]); 
+        new cliMail();   cliMail::criar(cliMail::$array);  
     endif;
 }
-
 
 
 

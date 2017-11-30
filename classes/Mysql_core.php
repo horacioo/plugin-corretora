@@ -2,29 +2,30 @@
 
 namespace classes\Mysql;
 
-class Mysql {
+class Mysql extends \classes\Request\Request {
 
     public static $id;
-    public static $tabela;
     public static $array;
     public static $consulta;
     public static $obrigatorios = [];
     public static $mensagem;
 
-    /***
-vou criar novo regstro
+    /**
+     * 
+      vou criar novo regstro
      *      */
-    static function create($array = NULL) {
+
+    static protected function create($array = NULL) {
         global $wpdb;
         if (is_array($array)):
-            
+
             $insert = "";
             $values = "";
             $chaves = array_keys($array);
 
             foreach ($chaves as $ch):
                 if (is_array($array[$ch])) {
-                    self::insertArray($array[$ch],$ch);
+                    self::insertArray($array[$ch], $ch);
                     return;
                 }
                 if (in_array($ch, self::$obrigatorios)) {
@@ -37,20 +38,30 @@ vou criar novo regstro
                 $values .= "'" . $array[$ch] . "',";
             endforeach;
 
-            $insert         .= "*";
-            $insert         = str_replace(",*", "", $insert);
-            $values         .= "*";
-            $values         = str_replace(",*", "", $values);
-            self::$consulta = "insert into " . self::$tabela . "(" . $insert . ")values(" . $values . ")";
+            $insert                       .= "*";
+            $insert                       = str_replace(",*", "", $insert);
+            $values                       .= "*";
+            $values                       = str_replace(",*", "", $values);
+            self::$consulta               = "insert into " . self::$tabela . "(" . $insert . ")values(" . $values . ")";
             $wpdb->query(self::$consulta);
-            $id =  $wpdb->insert_id;
-            self::$array[self::$tabela][]=$id;
-        endif;
+            $id                           = $wpdb->insert_id;
+            self::$array[self::$tabela] = $id;
+          endif;
     }
-    
-    private static function insertArray($info='',$campo='') {
+
+
+
+
+
+
+
+
+
+
+    private static function insertArray($info = '', $campo = '') {
         foreach ($info as $i):
-          self::create([$campo => $i]); echo "<br>".self::$consulta;
+            self::create([$campo => $i]);
+            echo "<br>" . self::$consulta;
         endforeach;
     }
 
@@ -126,7 +137,7 @@ vou criar novo regstro
 
 
 
-    static function Associate($tabelas='') {
+    static function Associate($tabelas = '') {
         global $wpdb;
     }
 
