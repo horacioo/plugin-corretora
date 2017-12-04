@@ -1,8 +1,9 @@
 <?php
 
-namespace classes\Mysql;
+namespace pl1;
 
-class Mysql extends \classes\Request\Request {
+class ClassePL1_Mysql extends ClassePL1_Mysql
+ {
 
     public static $id;
     public static $array;

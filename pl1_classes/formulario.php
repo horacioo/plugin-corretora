@@ -1,8 +1,8 @@
 <?php
 
-namespace classes\Formulario;
+namespace pl1;
 
-class Formulario {
+class ClassePL1_Formulario {
 
     static $campos = [
         'email',

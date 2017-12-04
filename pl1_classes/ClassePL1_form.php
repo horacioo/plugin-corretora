@@ -1,8 +1,8 @@
 <?php
 
-namespace classes\Request;
+namespace pl1;
 
-class Request {
+class ClassePL1_Request {
 
     public static $tabela = "";
     public static $campos = "";
