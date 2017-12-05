@@ -2,7 +2,7 @@
 
 namespace pl1;
 
-class ClassePL1_Mysql extends ClassePL1_Mysql
+class ClassePL1_Mysql extends ClassePL1_Request
  {
 
     public static $id;
