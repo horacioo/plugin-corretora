@@ -1,10 +1,10 @@
 <?php
 
 /*
-  Plugin Name: Plugin de Formulario com Cadastro em banco
+  Plugin Name: Plugin de Formulario com Cadastro em banco!!!
   Description: módulo para formulário de site.
   Author: Horácio
-  Version: 1
+  Version: 1.1
   Author URI: http://planet1.com.br
  */
 
@@ -17,6 +17,8 @@ require_once 'classes_Novas/ClasseDeEmails.php';
 require_once 'classes_Novas/ClasseDeclientes_email.php';
 require_once 'classes_Novas/ClasseDeTelefone.php';
 require_once 'classes_Novas/ClasseDeclientes_telefone.php';
+///require_once 'funcoes/paginas.php';
+
 
 use pl1\entidades as ent;
 use pl1\ClassePL1_Mysql as sql;
@@ -42,13 +44,6 @@ function Salvar($dados = '') {
 
 
 register_activation_hook('seguro_auto', ent::tabela_Cliente());
-
-
-
-
-
-
-
 
 
 add_shortcode("formLead", function($atts) {
@@ -107,4 +102,13 @@ add_shortcode("formLead", function($atts) {
 
 
 
+function Paginas(){
+    //add_menu_page($page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position)
+    add_menu_page("clientes", "cliente", "administrator", "cli",chamaHomeClientes); 
+//add_menu_page("clientes", "cliente", "administrator", "cli");
+    add_submenu_page("cliente", "lista", "listas", "administrator", "lis");
+}
 
+add_action('admin_init', Paginas());
+
+function chamaHomeClientes(){return "TESTE";}
