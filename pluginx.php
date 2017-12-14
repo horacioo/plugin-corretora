@@ -21,7 +21,7 @@ require_once 'classes_Novas/ClasseDeTelefone.php';
 use pl1\entidades as ent;
 use pl1\ClassePL1_Mysql as sql;
 use pl1\ClassePL1_Formulario as form;
-use Cliente\cliente as cli;
+use Extras\cliente as cli;
 use Extras\email as E;
 use Extras\clientes_email as CE;//use CEmail\clientes_email as CE;
 use Extras\Telefone as Tel;//use Tel\Telefone as tel;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cliente;
+namespace Extras;
 
 use pl1\ClassePL1_Mysql as ModeloCliente;
 
