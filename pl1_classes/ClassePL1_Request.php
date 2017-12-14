@@ -2,7 +2,8 @@
 
 namespace pl1;
 
-class ClassePL1_Request {
+class ClassePL1_Request
+    {
 
     public static $tabela = "";
     public static $campos = "";
@@ -18,6 +19,7 @@ class ClassePL1_Request {
 
     public static function Request($x) {
         self::$insert = NULL;
+
         if (is_array($x)):
             $parametro   = self::$campos;
             $dados       = $x;
@@ -26,29 +28,28 @@ class ClassePL1_Request {
             /*             * ***************************** */
             self::$dados = $x;
             /*             * **************************** */
-            foreach (self::$campos as $c):
-                if (in_array($c, $chaves)) {
-                    self::$insert[$c] = $dados[$c];
-                    unset($dados[$c]);
+
+            if (is_array(self::$campos)):
+                foreach (self::$campos as $c):
+                    if (in_array($c, $chaves)) {
+                        self::$insert[$c] = $dados[$c];
+                        unset($dados[$c]);
                 }
-            endforeach;
-            /*             * **************************** */
-            foreach ($chaves as $d):
-                if (isset($dados[$d])) {
-                    self::$over[$d] = $dados[$d];
+                endforeach;
+                /*                 * **************************** */
+                foreach ($chaves as $d):
+                    if (isset($dados[$d])) {
+                        self::$over[$d] = $dados[$d];
                 }
-            endforeach;
+                endforeach;
+            endif;
+
             /*             * **************************** */
 
             self::IntegridadeDadosNecessarios();
             return self::$insert;
         endif;
     }
-
-
-
-
-
 
 
 
@@ -69,9 +70,4 @@ class ClassePL1_Request {
 
 
 
-
-
-
-
-
-}
+    }

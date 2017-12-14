@@ -8,15 +8,35 @@
   Author URI: http://planet1.com.br
  */
 
-
-require'pl1_classes/entidades.php';
+require_once 'pl1_classes/entidades.php';
 require_once 'pl1_classes/ClassePL1_Request.php';
 require_once 'pl1_classes/Mysql_core.php';
 require_once 'pl1_classes/formulario.php';
+require_once 'classes_Novas/ClasseDeClientes.php';
+require_once 'classes_Novas/ClasseDeEmails.php';
+require_once 'classes_Novas/ClasseDeclientes_email.php';
+require_once 'classes_Novas/ClasseDeTelefone.php';
+
 
 use pl1\entidades as ent;
 use pl1\ClassePL1_Mysql as sql;
 use pl1\ClassePL1_Formulario as form;
+use Cliente\cliente as cli;
+use Extras\email as E;
+use Extras\clientes_email as CE;//use CEmail\clientes_email as CE;
+use Extras\Telefone as Tel;//use Tel\Telefone as tel;
+
+function Salvar($dados = '') {
+    
+    new cli();    cli::criar($dados);
+    new E();      E::criar($dados);
+    new CE();     CE::criar(CE::$array);
+    
+}
+
+
+
+
 
 register_activation_hook('seguro_auto', ent::tabela_Cliente());
 
@@ -29,8 +49,6 @@ register_activation_hook('seguro_auto', ent::tabela_Cliente());
 
 
 add_shortcode("formLead", function($atts) {
-
-
 
     if (isset($atts['campos'])) {
         ?>
@@ -74,5 +92,16 @@ add_shortcode("formLead", function($atts) {
         $return .= "</form>";
         $return .= "</section>";
     }
+
+
+    if (isset($_POST[form::nomeForm()])){
+        return Salvar($_POST[form::nomeForm()]);
+    }
+
     return $return;
 });
+
+
+
+
+
