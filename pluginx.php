@@ -16,7 +16,7 @@ require_once 'classes_Novas/ClasseDeClientes.php';
 require_once 'classes_Novas/ClasseDeEmails.php';
 require_once 'classes_Novas/ClasseDeclientes_email.php';
 require_once 'classes_Novas/ClasseDeTelefone.php';
-
+require_once './classes_Novas/';
 
 use pl1\entidades as ent;
 use pl1\ClassePL1_Mysql as sql;
@@ -26,11 +26,13 @@ use Extras\email as E;
 use Extras\clientes_email as CE;//use CEmail\clientes_email as CE;
 use Extras\Telefone as Tel;//use Tel\Telefone as tel;
 
+
 function Salvar($dados = '') {
     
     new cli();    cli::criar($dados);
     new E();      E::criar($dados);
     new CE();     CE::criar(CE::$array);
+    new Tel();    Tel::criar($dados);
     
 }
 

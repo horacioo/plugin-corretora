@@ -83,7 +83,17 @@ class entidades {
 
     private static function ClienteTelefone() {
         global $wpdb;
-        $sql = " CREATE TABLE `clientes_email` ( `id` int(11) NOT NULL AUTO_INCREMENT, `cliente` int(11) NOT NULL, `email` int(11) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `cliente_email` (`cliente`,`email`), KEY `email_ceK` (`email`), CONSTRAINT `cliente_ceK` FOREIGN KEY (`cliente`) REFERENCES `cliente` (`id`) ON DELETE CASCADE, CONSTRAINT `email_ceK` FOREIGN KEY (`email`) REFERENCES `email` (`id`) ON DELETE CASCADE ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;";
+        $sql = " CREATE TABLE `clientes_telefone` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `telefone` int(11) NOT NULL,
+                  `cliente` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `telefoneCliente` (`telefone`,`cliente`),
+                  KEY `cliente` (`cliente`),
+                  KEY `telefone` (`telefone`) USING BTREE,
+                  CONSTRAINT `cliente` FOREIGN KEY (`cliente`) REFERENCES `cliente` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+                  CONSTRAINT `telefone` FOREIGN KEY (`telefone`) REFERENCES `telefone` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
         $wpdb->query($sql);
     }
 
