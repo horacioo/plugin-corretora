@@ -17,7 +17,7 @@ require_once 'classes_Novas/ClasseDeEmails.php';
 require_once 'classes_Novas/ClasseDeclientes_email.php';
 require_once 'classes_Novas/ClasseDeTelefone.php';
 require_once 'classes_Novas/ClasseDeclientes_telefone.php';
-///require_once 'funcoes/paginas.php';
+require_once 'funcoes/paginas.php';
 
 
 use pl1\entidades as ent;
@@ -25,18 +25,37 @@ use pl1\ClassePL1_Mysql as sql;
 use pl1\ClassePL1_Formulario as form;
 use Extras\cliente as cli;
 use Extras\email as E;
-use Extras\clientes_email as CE;//use CEmail\clientes_email as CE;
-use Extras\Telefone as Tel;//use Tel\Telefone as tel;
+use Extras\clientes_email as CE; //use CEmail\clientes_email as CE;
+use Extras\Telefone as Tel; //use Tel\Telefone as tel;
 use Extras\clientes_Telefone as TelCl;
 
+
+
+add_action('admin_menu', 'MenuClientes');
+
+
+
+
+
+
+
+
+
+
+
+
 function Salvar($dados = '') {
-    
-    new cli();      cli::criar($dados);
-    new E();        E::criar($dados);
-    new CE();       CE::criar(CE::$array);
-    new Tel();      Tel::criar($dados);
-    new TelCl();    TelCl::criar(TelCl::$array);
-    
+
+    new cli();
+    cli::criar($dados);
+    new E();
+    E::criar($dados);
+    new CE();
+    CE::criar(CE::$array);
+    new Tel();
+    Tel::criar($dados);
+    new TelCl();
+    TelCl::criar(TelCl::$array);
 }
 
 
@@ -102,13 +121,10 @@ add_shortcode("formLead", function($atts) {
 
 
 
-function Paginas(){
-    //add_menu_page($page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position)
-    add_menu_page("clientes", "cliente", "administrator", "cli",chamaHomeClientes); 
-//add_menu_page("clientes", "cliente", "administrator", "cli");
-    add_submenu_page("cliente", "lista", "listas", "administrator", "lis");
-}
 
-add_action('admin_init', Paginas());
 
-function chamaHomeClientes(){return "TESTE";}
+
+
+
+
+
