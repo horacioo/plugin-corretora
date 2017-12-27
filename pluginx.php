@@ -8,6 +8,8 @@
   Author URI: http://planet1.com.br
  */
 
+define("pastaPlugin", plugin_dir_url("pluginx.php"));
+
 require_once 'pl1_classes/entidades.php';
 require_once 'pl1_classes/ClassePL1_Request.php';
 require_once 'pl1_classes/Mysql_core.php';
@@ -19,7 +21,6 @@ require_once 'classes_Novas/ClasseDeTelefone.php';
 require_once 'classes_Novas/ClasseDeclientes_telefone.php';
 require_once 'funcoes/paginas.php';
 
-
 use pl1\entidades as ent;
 use pl1\ClassePL1_Mysql as sql;
 use pl1\ClassePL1_Formulario as form;
@@ -29,20 +30,7 @@ use Extras\clientes_email as CE; //use CEmail\clientes_email as CE;
 use Extras\Telefone as Tel; //use Tel\Telefone as tel;
 use Extras\clientes_Telefone as TelCl;
 
-
-
 add_action('admin_menu', 'MenuClientes');
-
-
-
-
-
-
-
-
-
-
-
 
 function Salvar($dados = '') {
 
@@ -68,25 +56,16 @@ register_activation_hook('seguro_auto', ent::tabela_Cliente());
 add_shortcode("formLead", function($atts) {
 
     if (isset($atts['campos'])) {
-        ?>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
-        <script>
-            jQuery('document').ready(function () {
-                jQuery("#nomeForm").keyup(function () {
-                    this.value = this.value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]/g, '');
-                });
-                jQuery(function ($) {
-                    jQuery("#placaForm").mask("aaa-9999");
-                    jQuery("#telefoneForm").mask("(99)9999-9999");
-                    jQuery("#celularForm").mask("(99)9-9999-9999");
-                    jQuery("#whatsappForm").mask("(99)9-9999-9999");
-                    jQuery("#cpfForm").mask("999.999.999-99");
-                    jQuery("#data").mask("99/99/9999", {placeholder: "mm/dd/yyyy"});
-                });
-            });
-        </script>
-        <?php
+        /*         * *************************** */
+        wp_register_script("jsMini", "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js");
+        wp_register_script("mascara", "https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js");
+        wp_register_script("mask", pastaPlugin . "js/asMascaras.js");
+
+        wp_enqueue_script("jsMini");
+        wp_enqueue_script("mascara");
+        wp_enqueue_script("mask");
+        /*         * *************************** */
+
 
         $return = "<section id='" . form::nomeForm() . "'>";
         if (isset($atts['titulo'])) {
